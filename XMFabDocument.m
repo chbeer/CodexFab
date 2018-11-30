@@ -218,29 +218,37 @@
 	if (!privKey || !regName)
 		return nil;
 	
-	CFobLicGenerator *generator = [CFobLicGenerator generatorWithPrivateKey:privKey];
-	generator.regName = regName;
-	
+    NSError *error = nil;
+	CFobLicGenerator *generator = [[CFobLicGenerator alloc] init];
+    if (![generator setPrivateKey:privKey error:&error]) {
+        NSLog(@"Failed: %@", error);
+        return nil;
+    }
 	NSLog(@"generator %@ %@", regName, privKey);
 	
-	if (![generator generate]) {
-		
+    NSString *regCode = [generator generateRegCodeForName:regName error:&error];
+	if (!regCode) {
+        NSLog(@"Failed: %@", error);
 		return nil;		
 	}
 	
-	return generator.regCode;
+	return regCode;
 }
 
 - (BOOL) verifyRegCode:(NSString *)regCode forName:(NSString *)regName publicKey:(NSString *)pubKey {
 	
-	CFobLicVerifier *verifier = [CFobLicVerifier verifierWithPublicKey:pubKey];
-	verifier.regName = regName;
-	verifier.regCode = regCode;
-	
-	if ([verifier verify])
-		return YES;
-	
-	return NO;	
+    NSError *error = nil;
+    CFobLicVerifier *verifier = [[CFobLicVerifier alloc] init];
+    if (![verifier setPublicKey:pubKey error:&error]) {
+        NSLog(@"Failed: %@", error);
+        return NO;
+    }
+
+    if (![verifier verifyRegCode:regCode forName:regName error:&error]) {
+        NSLog(@"Failed: %@", error);
+        return NO;
+    }
+    return YES;
 }
 
 
