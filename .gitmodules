@@ -1,0 +1,3 @@
+[submodule "cocoafob"]
+	path = cocoafob
+	url = https://github.com/glebd/cocoafob.git

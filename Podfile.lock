@@ -1,0 +1,16 @@
+PODS:
+  - OpenSSL-Static (1.0.2.c1)
+
+DEPENDENCIES:
+  - OpenSSL-Static (~> 1.0.2.c)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - OpenSSL-Static
+
+SPEC CHECKSUMS:
+  OpenSSL-Static: bd17e34564a8591ad76b740318683a6caa19a13e
+
+PODFILE CHECKSUM: c60ca079317c34e54d6370972ec87d49bedc1935
+
+COCOAPODS: 1.6.0.beta.1
